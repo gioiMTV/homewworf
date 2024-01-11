@@ -43,7 +43,7 @@ struct sv {
     void in()  {
         cout << "Ten: " << ten << endl;
         cout << "Ma sinh vien: " << msv << endl;
-        cout << "Noi o: " << dc << endl;
+        cout << "Dia chi: " << dc << endl;
         cout << "Diem toan: " << toan << endl;
         cout << "Diem ly: " << ly << endl;
         cout << "Diem hoa: " << hoa << endl;
