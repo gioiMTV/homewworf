@@ -1,0 +1,80 @@
+#include <iostream>
+#include <iomanip>
+#include <algorithm>
+
+using namespace std;
+
+struct sv {
+    string ten;
+    string msv;
+    string dc;
+    float toan;
+    float ly;
+    float hoa;
+    float dtb;
+
+    void nhap() {
+        cout << "Nhap ten sinh vien: ";
+        getline(cin, ten);
+
+        cout << "Nhap ma sinh vien: ";
+        getline(cin, msv);
+
+        cout << "Nhap noi o: ";
+        getline(cin, dc);
+
+        cout << "Nhap diem toan: ";
+        cin >> toan;
+
+        cout << "Nhap diem ly: ";
+        cin >> ly;
+
+        cout << "Nhap diem hoa: ";
+        cin >> hoa;
+
+   
+        dtb = (toan + ly + hoa) / 3.0;
+
+
+        cin.ignore();
+    }
+
+
+    void in()  {
+        cout << "Ten: " << ten << endl;
+        cout << "Ma sinh vien: " << msv << endl;
+        cout << "Noi o: " << dc << endl;
+        cout << "Diem toan: " << toan << endl;
+        cout << "Diem ly: " << ly << endl;
+        cout << "Diem hoa: " << hoa << endl;
+        cout << "Diem trung binh: " << fixed << setprecision(2) << dtb << endl;
+        cout << endl;
+    }
+    bool operator < (const sv &other){
+    	return dtb < other.dtb;
+		} 
+}; 
+int Sort ( sv a[], int n){
+	for( int i = 0 ; i <  n ; i++){
+		 for( int  j = i + 1 ; j < n ; j++) if ( a[i] < a[j]) swap(a[i],a[j]);
+	}
+}
+int main() {
+    int n;
+    cout << "Nhap so luong sinh vien: ";
+    cin >> n;
+    cin.ignore(); 
+    sv ds[n];
+    for (int i = 0; i < n; i++) {
+        cout << "\nNhap thong tin cho sinh vien thu " << i + 1 << ":\n";
+        ds[i].nhap();
+    }
+	Sort(ds, n);
+    cout << "\nDanh sach sinh vien theo diem trung binh giam dan:\n";
+    for (int i = 0; i < n; i++) {
+        ds[i].in();
+    }
+
+}
+
+
