@@ -50,8 +50,8 @@ struct sv {
         cout << "Diem trung binh: " << fixed << setprecision(2) << dtb << endl;
         cout << endl;
     }
-    bool operator < (const sv &other){
-    	return dtb < other.dtb;
+    bool operator < (const sv &diem){
+    	return dtb < diem.dtb;
 		} 
 }; 
 int Sort ( sv a[], int n){
