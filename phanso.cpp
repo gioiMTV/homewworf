@@ -9,7 +9,34 @@ struct PhanSo {
 int ucln(int a, int b) {
     return (b == 0) ? a : ucln(b, a % b);
 }
-
+// tim ucln bằng pp trừ
+int ucln1(int a, int b){
+    // Nếu a = 0 => ucln(a,b) = b
+    // Nếu b = 0 => ucln(a,b) = a
+    if (a == 0 || b == 0){
+        return a + b;
+    }
+    while (a != b){
+        if (a > b){
+            a -= b; // a = a - b
+        }else{
+            b -= a;
+        }
+    }
+    return a; // return a or b, bởi vì lúc này a và b bằng nhau
+}
+// pp chia du
+int ucln2(int a, int b){
+    // Lặp tới khi 1 trong 2 số bằng 0
+    while (a*b != 0){ 
+        if (a > b){
+            a %= b; // a = a % b
+        }else{
+            b %= a;
+        }
+    }
+    return a + b; // return a + b, bởi vì lúc này hoặc a hoặc b đã bằng 0.
+}
 void toigian(PhanSo &ps) {
     int uclnChung = ucln(ps.tuSo, ps.mauSo);
     ps.tuSo /= uclnChung;
