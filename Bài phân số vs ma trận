@@ -1,0 +1,175 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+// BAI PHAN SO
+	
+class PhanSo {
+private:
+    int tuSo;
+    int mauSo;
+
+public:
+	int timUCLN(int a, int b)  {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+    
+	void toiGian() {
+        int ucln = timUCLN(abs(tuSo), abs(mauSo));
+        tuSo /= ucln;
+        mauSo /= ucln;
+    }
+    
+    PhanSo& operator=( PhanSo &other) {
+        if (this != &other) {
+            tuSo = other.tuSo;
+            mauSo = other.mauSo;
+        }
+        return *this;
+    }
+    friend std::istream& operator>>(std::istream& is, PhanSo &d) {
+        std::cout << "Nhap tu so: ";
+        is >> d.tuSo;
+
+        do {
+            std::cout << "Nhap mau so (khac 0): ";
+            is >> d.mauSo;
+        } while (d.mauSo == 0);
+        return is;
+    }
+
+
+    friend std::ostream& operator<<(std::ostream& os, PhanSo d) {
+        os << d.tuSo << "/" << d.mauSo;
+        return os;
+    }
+	
+
+    bool operator<(const PhanSo &d)  {
+        return (tuSo * d.mauSo) < (d.tuSo * mauSo);
+    }
+};
+
+
+void Sort(PhanSo a[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (a[j] < a[j + 1]) {
+                PhanSo tmp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = tmp;
+            }
+        }
+    }
+}
+
+
+
+// BAI MA TRAN 
+
+
+
+class mt {
+private:
+    int a[100][100];
+    int rows, cols;
+
+public:
+	
+    friend std::ostream& operator<<(std::ostream& os, const mt& d) {
+        std::cout << "Ma tran:  \n";
+        for (int i = 0; i < d.rows; i++) {
+            for (int j = 0; j < d.cols; j++)
+                os << d.a[i][j] << " ";
+            std::cout << std::endl;
+        }
+        return os;
+    }
+
+    friend std::istream& operator>>(std::istream& is, mt& d) {
+        std::cout << "Nhap so hang va cot cua ma tran: \n";
+        is >> d.rows>> d.cols;
+        std::cout << "Nhap ma tran: \n";
+        for (int i = 0; i < d.rows; i++) {
+            for (int j = 0; j < d.cols; j++)
+                is >> d.a[i][j];
+        }
+        return is;
+    }
+    bool isIdentityMatrix(mt &d) {
+        if (rows != cols) {
+            // Ma tr?n không ph?i là ma tr?n vuông, nên không ph?i là ma tr?n don v?
+            return false;
+        }
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if ((i == j && d.a[i][j] != 1) || (i != j && d.a[i][j] != 0)) {
+                    // Ph?n t? trên du?ng chéo chính ph?i b?ng 1, các ph?n t? khác ph?i b?ng 0
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+};
+
+
+
+int main() {
+	
+	
+	// BAI PHAN SO
+	
+	
+	
+    int n;
+    std::cout << "Nhap so luong phan so: ";
+    std::cin >> n;
+
+    PhanSo a[10];
+
+    for (int i = 0; i < n; ++i) {
+        std::cout << "Nhap thong tin cho phan so thu " << i + 1 << ":\n";
+        std::cin >> a[i];
+    }
+
+   
+   	Sort(a,n);
+
+    
+    std::cout << "Mang phan so sau khi sap xep:\n";
+    for (int i = 0 ; i < n ; i++) {
+        std::cout << a[i];
+        std::cout << "  ";
+    }
+    
+    
+    
+    
+    // BAI MA TRAN 
+    
+    
+    
+    
+	mt matrix;
+	std::cin >> matrix;
+
+    // S? d?ng toán t? xu?t <<
+    std::cout << matrix;
+
+    // Ki?m tra xem ma tr?n có ph?i là ma tr?n don v? hay không
+    if (matrix.isIdentityMatrix(matrix)) {
+        std::cout << "Day la ma tran don vi.\n";
+    } else {
+        std::cout << "Day khong phai la ma tran don vi.\n";
+    }
+
+    return 0;
+}
