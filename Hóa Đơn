@@ -1,0 +1,142 @@
+#include<iostream>
+#include<cstring>
+#include  <cctype>
+
+using namespace std;
+const int max_hoadon=100;
+class hoadon {
+private:
+	char mavattu[20];
+	char tenvattu[50];
+	char loaiphieu[10];
+	char ngaylap[11];
+	float khoiluong;
+	float dongia;
+	float  thanhtien;
+public:
+	
+	float tinhthanhtien(){
+		return thanhtien = khoiluong * dongia;
+	};
+	
+	float laythanhtien() {
+		return thanhtien;
+	};
+	
+	void toUpperString(char *str) {
+	    int length = strlen(str);
+	    for (int i = 0; i < length; ++i) {
+	        str[i] = toupper(str[i]);
+	    }
+	}
+	
+	hoadon &operator = ( hoadon &d) {
+        if (this != &d) {
+	        strcpy (mavattu,d.mavattu);
+	        strcpy (tenvattu,d.tenvattu);
+	        strcpy (loaiphieu,d.loaiphieu);
+	        strcpy (ngaylap,d.ngaylap);
+	        khoiluong = d.khoiluong;
+	        dongia = d.dongia;
+	        thanhtien = d.thanhtien;
+        }
+        return *this;
+    }
+	friend istream& operator>>(istream& is, hoadon &d) {
+        cout<<"Nhap ma vat tu: ";
+        is.ignore();
+		is.getline(d.mavattu,20);
+		cout<<"Nhap ten vat tu: ";
+		is.getline(d.tenvattu,50);
+		cout<<"Nhap loai phieu (A, B, C, D): ";
+		is.getline(d.loaiphieu,11);
+		d.toUpperString(d.loaiphieu); 
+		cout<<"Nhap ngay lap(10/02/1993): ";
+		is >> d.ngaylap;
+		cout<<"Nhap khoi luong: ";
+		is>>d.khoiluong;
+		cout<<"Nhap dong gia: ";
+		is>> d.dongia;
+		
+        return is;
+        
+    }
+
+	friend ostream& operator<<(ostream& os,  hoadon d) {
+		 if ((strcmp(d.loaiphieu, "A") == 0 )|| (strcmp(d.loaiphieu, "B") == 0)) {
+
+		 	   os << "Hang nhap" << endl;
+		 }
+         else {
+         	os << "Hang xuat" << endl;
+		 }
+            
+     	os<<"Ma vat tu: "<< d.mavattu << endl 
+		  <<"Ten vat tu: "<< d.tenvattu << endl 
+		  <<"Loai phieu: "<< d.loaiphieu << endl 
+		  <<"Ngay lap: "<< d.ngaylap << endl 
+		  <<"Khoi luong: "<< d.khoiluong << endl 
+		  <<"Dong gia: "<< d.dongia << endl 
+		  <<"Thanh Tien: "<< d.tinhthanhtien() << endl;
+        os << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ";
+        os << endl;
+       
+		return os;
+    }
+	
+
+    bool operator < ( hoadon &d)  {
+        return (laythanhtien()) < (d.laythanhtien());
+    }
+    
+};
+
+
+
+ void sapxepgiamdan ( hoadon danhsach[],int soluong)
+ {
+ 	 for(int i = 0; i < soluong ; ++i) {
+	 	for(int j = 0; j < soluong; ++j) { 
+			if( danhsach[i].laythanhtien() > danhsach[j].laythanhtien()) {
+				hoadon tmp = danhsach[i];
+				danhsach[i] = danhsach[j];
+				danhsach[j] =tmp;
+  			}
+	  }
+ }
+}
+ 
+ 
+
+ int main() {
+	cout<<"Nhap so luong hoa don: ";
+	int soluonghoadon;
+	cin>> soluonghoadon;
+	if(soluonghoadon> max_hoadon) { 
+		cout<<"So luong hoa don khong hop le (<100). \n"<<endl;
+		return 1;
+	}
+	hoadon danhsachhoadon[max_hoadon];
+	for(int i = 0; i < soluonghoadon; ++i) { 
+		cout<<"Nhap thong tin cho hoa don thu: "<<i+1<<":"<<endl;
+		cin >> danhsachhoadon[i];
+		
+	}
+	
+	float tongthanhtien = 0;
+	for(int i = 0; i < soluonghoadon; ++i) {
+		tongthanhtien += danhsachhoadon[i].tinhthanhtien();
+	}
+	cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ";
+    cout << endl;
+	cout<<"Tong thanh tien cua cac hoa don la: "<< tongthanhtien<<endl;
+	cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ";
+    cout << endl;
+	sapxepgiamdan(danhsachhoadon,soluonghoadon);
+	cout<<"Danh sach hao don sau khi sap xep giam dan theo thanh tien:"<<endl;
+	for(int i=0;i<soluonghoadon;++i) {
+		cout << danhsachhoadon[i];
+	}
+
+}
+
